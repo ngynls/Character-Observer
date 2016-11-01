@@ -76,6 +76,7 @@ Sword Character::getWeapon() {
 }
 void Character::setWeapon(Sword asword) {
 	weapon = &asword;
+	notify();
 }
 
 Shield Character::getShield() {
@@ -83,6 +84,7 @@ Shield Character::getShield() {
 }
 void Character::setShield(Shield ashield) {
 	shield = &ashield;
+	notify();
 }
 
 Armor Character::getArmor() {
@@ -90,6 +92,7 @@ Armor Character::getArmor() {
 }
 void Character::setArmor(Armor anarmor) {
 	armor = &anarmor;
+	notify();
 }
 
 Helmet Character::getHelmet() {
@@ -97,6 +100,7 @@ Helmet Character::getHelmet() {
 }
 void Character::setHelmet(Helmet ahelm) {
 	helmet = &ahelm;
+	notify();
 }
 
 Ring Character::getRing() {
@@ -104,6 +108,7 @@ Ring Character::getRing() {
 }
 void Character::setRing(Ring aring) {
 	ring = &aring;
+	notify();
 }
 
 Boots Character::getBoots() {
@@ -111,6 +116,7 @@ Boots Character::getBoots() {
 }
 void Character::setBoots(Boots aboot) {
 	boots = &aboot;
+	notify();
 }
 
 Belt Character::getBelt() {
@@ -119,6 +125,7 @@ Belt Character::getBelt() {
 
 void Character::setBelt(Belt abelt) {
 	belt = &abelt;
+	notify();
 }
 
 int Character::getHP() {
@@ -127,23 +134,47 @@ int Character::getHP() {
 int Character::getStrength() {
 	return abilityPoint[0];
 }
+void Character::setStrength(int strength){
+	abilityPoint[0] = strength;
+	notify();
+}
 int Character::getDexterity() {
 	return abilityPoint[1];
+}
+void Character::setDexterity(int dexterity){
+	abilityPoint[1] = dexterity;
+	notify();
 }
 int Character::getConstitution() {
 	return abilityPoint[2];
 }
+void Character::setConstitution(int constitution){
+	abilityPoint[2] = constitution;
+	notify();
+}
 int Character::getIntelligent() {
 	return abilityPoint[3];
 }
+void Character::setIntelligence(int intel){
+	abilityPoint[3] = intel;
+	notify();
+}
 int Character::getWisdom() {
 	return abilityPoint[4];
+}
+void Character::setWisdom(int wisdom){
+	abilityPoint[4] = wisdom;
+	notify();
 }
 int Character::getLevel() {
 	return level;
 }
 int Character::getCharisma() {
 	return abilityPoint[5];
+}
+void Character::setCharisma(int charisma){
+	abilityPoint[5] = charisma;
+	notify();
 }
 int Character::strModifier() {
 	return (abilityPoint[0] - 10) / 2;
@@ -166,6 +197,7 @@ int Character::chaModifier() {
 void Character::setLevel() {
 	level += 1;
 	setHP();
+	notify();
 }
 void Character::setHP() {
 	if (level == 2) {
@@ -208,7 +240,8 @@ void Character::printStats() {
 	cout << "Strength: " << abilityPoint[0] << endl;
 	cout << "Dexterity: " << abilityPoint[1] << endl;
 	cout << "Constitution: " << abilityPoint[2] << endl;
-	cout << "Intelligent: " << abilityPoint[3] << endl;
+	cout << "Intelligence: " << abilityPoint[3] << endl;
 	cout << "Wisdom: " << abilityPoint[4] << endl;
 	cout << "Charisma: " << abilityPoint[5] << endl;
+	cout << endl;
 }

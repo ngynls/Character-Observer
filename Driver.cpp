@@ -6,13 +6,24 @@
 using namespace std;
 
 int main() {
-	Character* character = new Character();
+	Character *character;
+	character = new Character();
 	character->printStats();
 
-	CharacterObserver *observer = new CharacterObserver();
-	character->attach(observer);
+	CharacterObserver *observer;
+	observer = new CharacterObserver(character);
 
-	character->hp(2);
+	character->setLevel();
+
+	character->hp(2); // this should decrease the hp by 2 & update the character stats
+
+	character->hp(2); // this decreases the hp by 2 again
+
+	character->setDexterity(4);
+	character->setStrength(2);
+	character->setConstitution(1);
+	character->setWisdom(2);
+	character->setCharisma(1);
 
 	cin.get();
 	return 0;
