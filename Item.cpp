@@ -3,18 +3,12 @@
 
 //! Default Constructor
 Item::Item() {
-	name = "";
 	type = "";
 }
 //! Custom constructor
-Item::Item(string nameOfItem, string type_name, vector<Enhancement> influences) {
-		name = nameOfItem;
+Item::Item(string type_name, vector<Enhancement> influences) {
 		type = type_name;
 		influence = influences;
-}
-//! Accessor method for the name of the item
-string  Item::getName(){
-	return name;
 }
 //! Accessor method for the type of the item
 string Item::getType() {
@@ -24,11 +18,6 @@ string Item::getType() {
 //! Method to return the list of influences
 vector<Enhancement> Item::getInfluences() {
 	return influence;
-}
-
-//! Method to set the name of the item
-void Item::setName(string nameOfItem) {
-	name = nameOfItem;
 }
 
 //! Method to set the type of the item
@@ -77,6 +66,5 @@ bool Item::validateItem() {
 }
 
 void Item::showStats() {
-cout << getName() << endl;
 printVector(getInfluences());
 }

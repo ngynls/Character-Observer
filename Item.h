@@ -12,15 +12,11 @@ public:
 	//! Default constructor
 	Item();
 	//! Custom constructor
-	Item(string nameOfItem, string type_name, vector<Enhancement> influences);
-	//! Accessor for the name
-	string getName();
+	Item(string type_name, vector<Enhancement> influences);
 	//! Accessor for the type of item
 	string getType();
 	//! Accessor for the influences
 	vector<Enhancement> getInfluences();
-	//! Method to set the name
-	void setName(string nameOfItem);
 	//! Method to set the type
 	void setItemType(string nameOftype);
 	//! Method to set the enhancement vector
@@ -30,10 +26,9 @@ public:
 	//! Method to validate an item
 	bool validateItem();
 	//! Method to print stats
-	void showStats();
+	virtual void showStats();
 
 private:
-	string name;
 	string type;
 	vector<Enhancement> influence;
 };

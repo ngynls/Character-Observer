@@ -8,6 +8,10 @@ public:
 	Boots();
 	//! Constructor taking 3 parameters (the name of the boots, the type and the influence vector (ARM,DEX)
 	Boots(string bootsName, string type, vector<Enhancement> myinfluence);
+	//! Accessor of boots name
+	string getBootsName();
 	//! Prints the stats of the boots
 	void showStats();
+private:
+	string nameOfBoots;
 };

@@ -12,6 +12,10 @@ public:
 	int getAtt();
 	//! Accessor for DAM
 	int getDam();
+	//! Accessor for the name of the sword
+	string getSwordName();
 	//! Prints stats of the sword
 	void showStats();
+private:
+	string nameOfSword;
 };

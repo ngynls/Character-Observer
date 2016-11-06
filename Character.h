@@ -50,6 +50,7 @@ public:
 	void setWisdom(int);
 	//! Mutator for the charisma
 	void setCharisma(int);
+
 	//Accessor methods for stat modifiers
 	//! Returns the strength modifier
 	int strModifier();
@@ -115,16 +116,30 @@ private:
 	int level;
 	int totalHP;
 	int abilityPoint[6];
+	int effStr;
+	int effDex;
+	int effCons;
+	int effInt;
+	int effWis;
+	int effChar;
+	int modStr;
+	int modDex;
+	int modCons;
+	int modInt;
+	int modWis;
+	int modChar;
 	int currentHP;
 	int armorclass;
+	int attBonus;
+	int damBonus;
 	int proficiency;
 	void setStats();
 	void setHP();
-	Belt* belt;
-	Sword* weapon;
-	Shield* shield;
-	Helmet* helmet;
-	Ring* ring;
-	Boots* boots;
-	Armor* armor;
+	Belt belt;
+	Sword weapon;
+	Shield shield;
+	Helmet helmet;
+	Ring ring;
+	Boots boots;
+	Armor armor;
 };

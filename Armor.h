@@ -8,6 +8,10 @@ public:
 	Armor();
 	//! Constructor that takes 3 parameters (name of the armor, the type, the influence vector (ARM))
 	Armor(string nameOfArmor, string type, vector<Enhancement> myinfluence);
+	//! Access the name of the armor
+	string getArmorName();
 	//! Prints the stats of the armor
 	void showStats();
+private:
+	string nameOfArmor;
 };

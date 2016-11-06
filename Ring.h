@@ -8,7 +8,11 @@ public:
 	Ring();
 	//! Constructor taking 3 parameters (the name of the ring, the type and its enhancement vector (ARM, STR, CON, WIS, CHA)
 	Ring(string nameRing, string type, vector<Enhancement> myinfluence);
+	//! Accessor of ring name
+	string getRingName();
 	//! Prints stats of the ring
 	void showStats();
+private:
+	string nameOfRing;
 
 };

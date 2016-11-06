@@ -9,6 +9,10 @@ public:
 	Helmet();
 	//! Constructor taking 3 parameters (the name of the helmet, the type and its influence vector (INT, WIS, ARM)
 	Helmet(string nameHelmet, string type, vector<Enhancement> myinfluence);
+	//! Accessor of name of helmet
+	string getHelmetName();
 	//! Prints stats of the helmet
 	void showStats();
+private:
+	string nameOfHelmet;
 };

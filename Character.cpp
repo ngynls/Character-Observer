@@ -22,16 +22,29 @@ Character::Character(int strength, int dexterity, int constitution, int intellig
 	abilityPoint[3] = intelligent;
 	abilityPoint[4] = wisdom;
 	abilityPoint[5] = charisma;
+	effStr = abilityPoint[0];
+	effDex = abilityPoint[1];
+	effCons = abilityPoint[2];
+	effInt = abilityPoint[3];
+	effWis = abilityPoint[4];
+	effChar = abilityPoint[5];
+	modStr = floor((effStr - 10) / 2);
+	modDex = floor((effDex - 10) / 2);
+	modCons = floor((effCons - 10) / 2);
+	modInt = floor((effInt - 10) / 2);
+	modWis = floor((effWis - 10) / 2);
+	modChar = floor((effChar - 10) / 2);
+	armorclass = armorClass();
 	totalHP = 10;
 	currentHP = totalHP;
 	proficiency = 2;
-	belt = new Belt();
-	weapon = new Sword();
-	shield = new Shield();
-	armor = new Armor();
-	boots = new Boots();
-	ring = new Ring();
-	helmet = new Helmet();
+	belt = Belt();
+	weapon = Sword();
+	shield = Shield();
+	armor = Armor();
+	boots = Boots();
+	ring = Ring();
+	helmet = Helmet();
 }
 Character::Character() {
 	level = 1;
@@ -42,28 +55,41 @@ Character::Character() {
 			abilityPoint[i] = (rand() % 18) + 3;
 		}
 	}
+	effStr = abilityPoint[0];
+	effDex = abilityPoint[1];
+	effCons = abilityPoint[2];
+	effInt = abilityPoint[3];
+	effWis = abilityPoint[4];
+	effChar = abilityPoint[5];
+	modStr = floor((effStr - 10) / 2);
+	modDex = floor((effDex - 10) / 2);
+	modCons = floor((effCons - 10) / 2);
+	modInt = floor((effInt - 10) / 2);
+	modWis = floor((effWis - 10) / 2);
+	modChar = floor((effChar - 10) / 2);
+	armorclass = armorClass();
 	totalHP = 10;
 	currentHP = totalHP;
-	belt = new Belt();
-	weapon = new Sword();
-	shield = new Shield();
-	armor = new Armor();
-	boots = new Boots();
-	ring = new Ring();
-	helmet = new Helmet();
+	belt = Belt();
+	weapon = Sword();
+	shield = Shield();
+	armor = Armor();
+	boots = Boots();
+	ring = Ring();
+	helmet = Helmet();
 }
 
 Character::~Character() {
 }
 
 int Character::attackBonus() {
-	return proficiency + strModifier();
+	return proficiency + floor((effStr - 10) / 2);
 }
 int Character::damageBonus() {
-	return weapon->getDam() + strModifier();
+	return weapon.getDam() + floor((effStr - 10) / 2);
 }
 int Character::armorClass() {
-	return 10 + dexModifier();
+	return 10 + floor((effDex - 10) / 2);
 }
 
 void Character::hp(int dmg) {
@@ -72,59 +98,84 @@ void Character::hp(int dmg) {
 }
 
 Sword Character::getWeapon() {
-	return *weapon;
+	return weapon;
 }
 void Character::setWeapon(Sword asword) {
-	weapon = &asword;
+	weapon = asword;
+	attBonus += weapon.getInfluences()[0].getBonus();
+	damBonus += weapon.getInfluences()[1].getBonus();
 	notify();
 }
 
 Shield Character::getShield() {
-	return *shield;
+	return shield;
 }
 void Character::setShield(Shield ashield) {
-	shield = &ashield;
+	shield = ashield;
+	armorclass += shield.getInfluences()[0].getBonus();
 	notify();
 }
 
 Armor Character::getArmor() {
-	return *armor;
+	return armor;
 }
 void Character::setArmor(Armor anarmor) {
-	armor = &anarmor;
+	armor = anarmor;
+	armorclass += armor.getInfluences()[0].getBonus();
 	notify();
 }
 
 Helmet Character::getHelmet() {
-	return *helmet;
+	return helmet;
 }
 void Character::setHelmet(Helmet ahelm) {
-	helmet = &ahelm;
+	helmet = ahelm;
+	effInt += helmet.getInfluences()[0].getBonus();
+	modInt = floor((effInt - 10) / 2);
+	effWis += helmet.getInfluences()[1].getBonus();
+	modWis = floor((effWis - 10) / 2);
+	armorclass += helmet.getInfluences()[2].getBonus();
 	notify();
 }
 
 Ring Character::getRing() {
-	return *ring;
+	return ring;
 }
 void Character::setRing(Ring aring) {
-	ring = &aring;
+	ring = aring;
+	armorclass += ring.getInfluences()[0].getBonus();
+	effStr += ring.getInfluences()[1].getBonus();
+	modStr = floor((effStr - 10) / 2);
+	effCons += ring.getInfluences()[2].getBonus();
+	modCons = floor((effCons - 10) / 2);
+	effWis += ring.getInfluences()[3].getBonus();
+	modWis = floor((effWis - 10) / 2);
+	effChar += ring.getInfluences()[4].getBonus();
+	modChar = floor((effChar - 10) / 2);
 	notify();
 }
 
 Boots Character::getBoots() {
-	return *boots;
+	return boots;
 }
 void Character::setBoots(Boots aboot) {
-	boots = &aboot;
+	boots = aboot;
+	armorclass += boots.getInfluences()[0].getBonus();
+	effDex += boots.getInfluences()[1].getBonus();
+	modDex = floor((effDex - 10) / 2);
 	notify();
 }
 
 Belt Character::getBelt() {
-	return *belt;
+	return belt;
 }
 
 void Character::setBelt(Belt abelt) {
-	belt = &abelt;
+	belt = abelt;
+	effCons += belt.getInfluences()[0].getBonus();
+	effStr += belt.getInfluences()[1].getBonus();
+	modCons = floor((effCons - 10) / 2);
+	modStr = floor((effStr - 10) / 2);
 	notify();
 }
 
@@ -177,22 +228,22 @@ void Character::setCharisma(int charisma){
 	notify();
 }
 int Character::strModifier() {
-	return (abilityPoint[0] - 10) / 2;
+	return floor((effStr - 10) / 2);
 }
 int Character::dexModifier() {
-	return (abilityPoint[1] - 10) / 2;
+	return floor((effDex - 10) / 2);
 }
 int Character::consModifier() {
-	return (abilityPoint[2] - 10) / 2;
+	return floor((effCons - 10) / 2);
 }
 int Character::intModifier() {
-	return (abilityPoint[3] - 10) / 2;
+	return floor((effInt - 10) / 2);
 }
 int Character::wisModifier() {
-	return (abilityPoint[4] - 10) / 2;
+	return floor((effWis - 10) / 2);
 }
 int Character::chaModifier() {
-	return (abilityPoint[5] - 10) / 2;
+	return floor((effChar - 10) / 2);
 }
 void Character::setLevel() {
 	level += 1;
@@ -201,23 +252,35 @@ void Character::setLevel() {
 }
 void Character::setHP() {
 	if (level == 2) {
-		totalHP += 10 + consModifier();
+		totalHP += 10 + floor((effCons - 10) / 2);
 		currentHP = totalHP;
 		setStats();
 	}
 	else if (level>2) {
-		totalHP += ((rand() % 10) + 1) + consModifier();
+		totalHP += ((rand() % 10) + 1) + floor((effCons - 10) / 2);
 		currentHP = totalHP;
 		setStats();
 	}
 }
 void Character::setStats() {
-	abilityPoint[0] += strModifier();
-	abilityPoint[1] += dexModifier();
-	abilityPoint[2] += consModifier();
-	abilityPoint[3] += intModifier();
-	abilityPoint[4] += wisModifier();
-	abilityPoint[5] += chaModifier();
+	abilityPoint[0] += floor((effStr - 10) / 2);
+	effStr = abilityPoint[0];
+	modStr= floor((effStr - 10) / 2);
+	abilityPoint[1] += floor((effDex - 10) / 2);
+	effDex = abilityPoint[1];
+	modDex= floor((effDex - 10) / 2);
+	abilityPoint[2] += floor((effCons - 10) / 2);
+	effCons = abilityPoint[2];
+	modCons= floor((effCons - 10) / 2);
+	abilityPoint[3] += floor((effInt - 10) / 2);
+	effInt = abilityPoint[3];
+	modInt= floor((effInt - 10) / 2);
+	abilityPoint[4] += floor((effWis - 10) / 2);
+	effWis = abilityPoint[4];
+	modWis= floor((effWis - 10) / 2);
+	abilityPoint[5] += floor((effChar- 10) / 2);
+	effChar = abilityPoint[5];
+	modChar= floor((effChar - 10) / 2);
 	if (level >= 1 && level <= 4) {
 		proficiency = 2;
 	}
@@ -234,14 +297,32 @@ void Character::setStats() {
 		proficiency = 6;
 	}
 }
+
 void Character::printStats() {
 	cout << "Level: " << level << endl;
 	cout << "HP: " << currentHP << "/" << totalHP << endl;
+	cout << "////////////////////////" << endl;
 	cout << "Strength: " << abilityPoint[0] << endl;
+	cout << "\tSTR Modifier: " << modStr << endl;
 	cout << "Dexterity: " << abilityPoint[1] << endl;
+	cout << "\tDEX Modifier: " << modDex << endl;
 	cout << "Constitution: " << abilityPoint[2] << endl;
+	cout << "\tCONS Modifier: " << modCons << endl;
 	cout << "Intelligence: " << abilityPoint[3] << endl;
+	cout << "\tINT Modifier: " << modInt << endl;
 	cout << "Wisdom: " << abilityPoint[4] << endl;
+	cout << "\tWIS Modifier: " << modWis << endl;
 	cout << "Charisma: " << abilityPoint[5] << endl;
+	cout << "\tCHA Modifier: " << modChar << endl;
+	cout << endl;
+	cout << "Armor Class: " << armorclass << endl;
+	cout << "////////////////////////" << endl;
+	cout << "Items equipped" << endl;
+	cout << "Helmet: " << helmet.getHelmetName() << endl;
+	cout << "Armor: " << armor.getArmorName() << endl;
+	cout << "Shield: " << shield.getShieldName() << endl;
+	cout << "Ring: " << ring.getRingName() << endl;
+	cout << "Boots: " << boots.getBootsName() << endl;
+	cout << "Weapon: " << weapon.getSwordName() << endl;
 	cout << endl;
 }
