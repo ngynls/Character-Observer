@@ -35,6 +35,8 @@ Character::Character(int strength, int dexterity, int constitution, int intellig
 	modWis = floor((effWis - 10) / 2);
 	modChar = floor((effChar - 10) / 2);
 	armorclass = armorClass();
+	attBonus = attackBonus();
+	damBonus = damageBonus();
 	totalHP = 10;
 	currentHP = totalHP;
 	proficiency = 2;
@@ -68,6 +70,8 @@ Character::Character() {
 	modWis = floor((effWis - 10) / 2);
 	modChar = floor((effChar - 10) / 2);
 	armorclass = armorClass();
+	attBonus = attackBonus();
+	damBonus = damageBonus();
 	totalHP = 10;
 	currentHP = totalHP;
 	belt = Belt();
@@ -86,7 +90,7 @@ int Character::attackBonus() {
 	return proficiency + floor((effStr - 10) / 2);
 }
 int Character::damageBonus() {
-	return weapon.getDam() + floor((effStr - 10) / 2);
+	return floor((effStr - 10) / 2);
 }
 int Character::armorClass() {
 	return 10 + floor((effDex - 10) / 2);
@@ -316,6 +320,8 @@ void Character::printStats() {
 	cout << "\tCHA Modifier: " << modChar << endl;
 	cout << endl;
 	cout << "Armor Class: " << armorclass << endl;
+	cout << "Attack Bonus: " << attBonus << endl;
+	cout << "Damage Bonus: " << damBonus << endl;
 	cout << "////////////////////////" << endl;
 	cout << "Items equipped" << endl;
 	cout << "Helmet: " << helmet.getHelmetName() << endl;
